@@ -31,3 +31,8 @@
     transform: rotate(360deg);
   }
 }
+
+.btn-counter{
+  width: 120px;
+  height: 45px;
+}
