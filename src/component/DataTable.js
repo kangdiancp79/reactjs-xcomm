@@ -15,8 +15,8 @@ export default function CarTable() {
 				field: 'registerNumber'
 			},
 			{ title: 'Description', field: 'description' },
-            { title: 'Year', field: 'year' },
-            { title: 'Price', field: 'price' }
+			{ title: 'Year', field: 'year' },
+			{ title: 'Price', field: 'price' }
 		],
 		data: []
 	});
@@ -26,9 +26,9 @@ export default function CarTable() {
 	}, []);
 
 	const fetchCars = async () => {
-        const result = await axios.get(`${springbootUrl}/cars`);
+		const result = await axios.get(`${springbootUrl}/cars`);
 		const data = result.data;
-        setState({ ...state, data });
+		setState({ ...state, data });
 	};
 
 	return (
@@ -39,16 +39,19 @@ export default function CarTable() {
 				data={state.data}
 				editable={{
 					onRowAdd: (newData) =>
-						new Promise((resolve) => {
-							setTimeout(() => {
-								resolve();
-                                const data = [...state.data];
-                               
+						axios
+							.post('${springbootUrl}/cars/', {
+								newData
+							})
+							.then(function(response) {
+								console.log(response);
+								const data = [ ...state.data ];
 								data.push(newData);
 								setState({ ...state, data });
-							}, 600);
-						}
-						),
+							})
+							.catch(function(error) {
+								console.log(error);
+							}),
 					onRowUpdate: (newData, oldData) =>
 						new Promise((resolve) => {
 							setTimeout(() => {
